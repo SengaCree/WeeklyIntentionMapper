@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Weekly Intention Mapper - 7-Day Alignment Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h1 {
+            color: white;
+            font-size: 2.3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-container p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .login-form {
+            margin-bottom: 30px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .login-error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+
+        .login-footer {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .login-footer p {
+            margin: 5px 0;
+        }
+
+        .main-app {
+            display: block;
+        }
+
+        .main-app.hidden {
+            display: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.3em;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .credit {
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section.hidden {
+            display: none;
+        }
+
+        .section h2 {
+            color: #2c5aa0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .prompt-question {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .prompt-question h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .prompt-question p {
+            color: #1e3a8a;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .weekly-focus {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f59e0b;
+            text-align: center;
+        }
+
+        .weekly-focus h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        .weekly-focus p {
+            color: #a16207;
+            font-style: italic;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #718096, #4a5568);
+        }
+
+        .analysis-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #4facfe;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .analysis-content {
+            white-space: pre-wrap;
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            color: #2d3748;
+        }
+
+        .copy-section {
+            background: #f0f8ff;
+            border: 1px solid #bee3f8;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .copy-section h4 {
+            color: #2b6cb0;
+            margin-bottom: 15px;
+        }
+
+        .copy-text {
+            background: white;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .step-indicator {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: background 0.3s ease;
+        }
+
+        .step-dot.active {
+            background: #4CAF50;
+        }
+
+        .step-dot.completed {
+            background: #2196F3;
+        }
+
+        .warning {
+            background: #fef5e7;
+            border: 1px solid #f6ad55;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #744210;
+        }
+
+        .date-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #2c5aa0;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .login-container h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div class="login-screen" id="loginScreen">
+            <div class="login-container">
+                <h1>Quantum Weekly Intention Mapper</h1>
+                <p>7-Day Alignment Portal</p>
+                <div class="login-form">
+                    <input type="password" id="passwordInput" placeholder="Enter access code" />
+                    <button class="btn" onclick="checkPassword()">Access Portal</button>
+                    <div id="loginError" class="login-error"></div>
+                </div>
+                <div class="login-footer">
+                    <p>© Senga Cree Coaching</p>
+                    <p>Weekly transformation for authorized clients</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App (Hidden by default) -->
+        <div class="main-app hidden" id="mainApp">
+        <div class="header">
+            <h1>Quantum Weekly Intention Mapper</h1>
+            <p>7-Day Alignment Portal</p>
+            <p>Weekly Belief Reprogramming & Aligned Action Design</p>
+            <div class="credit">Created by Senga Cree Coaching</div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step-dot active" id="step1"></div>
+                <div class="step-dot" id="step2"></div>
+                <div class="step-dot" id="step3"></div>
+                <div class="step-dot" id="step4"></div>
+                <div class="step-dot" id="step5"></div>
+                <div class="step-dot" id="step6"></div>
+            </div>
+        </div>
+
+        <!-- Current Week Display -->
+        <div class="date-display" id="weekDisplay"></div>
+
+        <!-- Step 1: Future Self Weekly Vision -->
+        <div class="section" id="section1">
+            <h2>Step 1: Future Self Weekly Vision</h2>
+            
+            <div class="weekly-focus">
+                <h3>✨ Weekly Quantum Visioning ✨</h3>
+                <p>Connect with your most aligned self one week from today</p>
+            </div>
+            
+            <div class="prompt-question">
+                <h4>Future Self Connection</h4>
+                <p>Close your eyes and step into your most aligned self one week from now. What does that version of you feel like?</p>
+                <p>If this week unfolded perfectly in alignment with your bigger vision, what would happen?</p>
+                <p>What would your future self want you to know about this week?</p>
+                <p>How does this week connect to your ultimate yearly vision and long-term dreams?</p>
+                <p>What energy do you want to be embodying by the end of this week?</p>
+            </div>
+            <textarea id="vision" placeholder="Connect with your future self and describe your perfect week..."></textarea>
+            
+            <div class="navigation">
+                <div></div>
+                <button class="btn" onclick="nextStep(2)">Next: Energy Scan →</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Current Energy & Resistance Scan -->
+        <div class="section hidden" id="section2">
+            <h2>Step 2: Current Energy & Resistance Scan</h2>
+            
+            <div class="prompt-question">
+                <h4>Present Moment Awareness</h4>
+                <p>What stories are you telling yourself about what's possible this week?</p>
+                <p>Where do you feel resistance when you think about your weekly intentions?</p>
+                <p>What language do you use when you talk about your week ahead?</p>
+                <p>What would you do this week if you knew you couldn't fail?</p>
+                <p>What excuses are already forming in your mind about why things might not work out?</p>
+                <p>How does your body feel when you think about your week ahead - excited, anxious, heavy, light?</p>
+            </div>
+            <textarea id="energy" placeholder="Scan your current energy and notice any resistance patterns..."></textarea>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(1)">← Previous</button>
+                <button class="btn" onclick="nextStep(3)">Next: Belief Archaeology →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Belief Archaeology & Sabotage Detection -->
+        <div class="section hidden" id="section3">
+            <h2>Step 3: Belief Archaeology & Sabotage Detection</h2>
+            
+            <div class="prompt-question">
+                <h4>Uncovering Hidden Patterns</h4>
+                <p>What limiting beliefs are trying to hijack this week?</p>
+                <p>When you imagine achieving your weekly intentions, what fear comes up first?</p>
+                <p>What would your inner critic say about these goals?</p>
+                <p>What patterns do you notice in how you typically approach your weeks?</p>
+                <p>Where do you usually sabotage yourself - in planning, starting, or following through?</p>
+                <p>What stories from your past are influencing how you see this week?</p>
+            </div>
+            <textarea id="beliefs" placeholder="Explore the beliefs and patterns that might sabotage your week..."></textarea>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(2)">← Previous</button>
+                <button class="btn" onclick="nextStep(4)">Next: Aligned Action →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Aligned Action Design -->
+        <div class="section hidden" id="section4">
+            <h2>Step 4: Aligned Action Design</h2>
+            
+            <div class="prompt-question">
+                <h4>Creating Your Quantum Week</h4>
+                <p>What 3 actions would create the most quantum leap this week?</p>
+                <p>How will you know you're in alignment vs. forcing or pushing?</p>
+                <p>What daily practices will anchor you in your weekly intention?</p>
+                <p>How will you measure success beyond just 'getting things done'?</p>
+                <p>What support do you need to stay aligned throughout the week?</p>
+                <p>How will you check in with yourself daily to course-correct if needed?</p>
+            </div>
+            <textarea id="action" placeholder="Design your aligned actions and support systems..."></textarea>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(3)">← Previous</button>
+                <button class="btn" onclick="nextStep(5)">Next: Completion & Integration →</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Completion & Integration -->
+        <div class="section hidden" id="section5">
+            <h2>Step 5: Completion & Integration</h2>
+            
+            <div class="prompt-question">
+                <h4>Anchoring Your Week</h4>
+                <p>How will you celebrate when this week is complete?</p>
+                <p>What will you do when resistance shows up during the week?</p>
+                <p>How will you honor your progress, even if things don't go exactly as planned?</p>
+                <p>What phrase or mantra will remind you of your intention when you feel off-track?</p>
+                <p>How will this week contribute to your larger transformation journey?</p>
+            </div>
+            <textarea id="completion" placeholder="Set your completion rituals and integration practices..."></textarea>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(4)">← Previous</button>
+                <button class="btn" onclick="nextStep(6)">Generate Analysis →</button>
+            </div>
+        </div>
+
+        <!-- Step 6: AI Analysis -->
+        <div class="section hidden" id="section6">
+            <h2>Step 6: Weekly Quantum Analysis</h2>
+            
+            <div class="warning">
+                <strong>Instructions:</strong> Copy your responses and the analysis framework below into your preferred AI assistant to receive your personalized weekly transformation blueprint.
+            </div>
+            
+            <div class="copy-section">
+                <h4>Your Weekly Intention Mapping:</h4>
+                <div class="copy-text" id="weeklyResponses"></div>
+                <button class="btn" onclick="copyToClipboard('weeklyResponses')">Copy Weekly Responses</button>
+            </div>
+            
+            <div class="copy-section">
+                <h4>Weekly Quantum Analysis Framework:</h4>
+                <div class="copy-text" id="weeklyAnalysisPrompt">Perform a comprehensive weekly intention analysis using the following framework.
+
+WEEKLY QUANTUM INTENTION ANALYSIS FRAMEWORK:
+
+1. Intention-Reality Alignment Scan
+- Measure energetic resonance between stated intentions and subconscious beliefs
+- Identify intention-sabotage patterns specific to this week
+- Analyze language of possibility vs. limitation in weekly planning
+- Decode fear-based vs. love-based motivation in action choices
+
+2. Self-Sabotage Pattern Recognition
+- Extract recurring self-defeating narratives that emerge weekly
+- Identify timing of resistance (planning vs. execution vs. completion)
+- Map protection mechanisms disguised as "realism" or "being practical"
+- Decode procrastination and avoidance language patterns
+
+3. Future Self Coherence Analysis
+- Assess alignment between weekly goals and long-term vision
+- Identify disconnects between daily actions and bigger dreams
+- Measure energetic frequency of weekly intentions
+- Analyze embodiment vs. mental goal-setting patterns
+
+4. Weekly Belief Reprogramming Protocols
+- Generate precise weekly affirmations based on identified resistance
+- Create embodied daily practices for this specific week
+- Design resistance-to-flow transformation techniques
+- Craft quantum leap activation scripts for weekly implementation
+
+5. Aligned Action Architecture
+- Prioritize actions by energetic alignment vs. "shoulds"
+- Design accountability structures that support vs. pressure
+- Create completion rituals that anchor weekly success
+- Map daily check-in protocols for course correction
+
+6. Weekly Integration Blueprint
+- Develop celebration and acknowledgment practices
+- Create resilience protocols for when things don't go as planned
+- Design learning extraction from weekly experiences
+- Build momentum bridges to the following week
+
+SPECIFIC WEEKLY ANALYSIS REQUESTS:
+- Identify top 3 weekly sabotage patterns to watch for
+- Provide daily alignment check-in questions
+- Create personalized weekly mantras/affirmations
+- Design specific practices to transform resistance
+- Generate a weekly completion ritual
+- Create daily micro-actions that build quantum momentum
+
+DELIVER AS:
+- Weekly belief reprogramming script
+- 7-day aligned action roadmap
+- Daily alignment check-in protocol
+- Weekly completion and celebration ritual
+- Personalized resistance transformation toolkit</div>
+                <button class="btn" onclick="copyToClipboard('weeklyAnalysisPrompt')">Copy Analysis Framework</button>
+            </div>
+            
+            <div class="analysis-section">
+                <h3>Paste Your Weekly AI Analysis Here:</h3>
+                <textarea id="weeklyAiAnalysis" placeholder="Paste your weekly transformation blueprint here..." style="min-height: 300px;"></textarea>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="prevStep(5)">← Previous</button>
+                <button class="btn" onclick="generateWeeklyReport()">Generate Weekly Blueprint</button>
+            </div>
+        </div>
+
+        <!-- Complete Weekly Report -->
+        <div class="section hidden" id="weeklyReport">
+            <h2>Your Weekly Quantum Intention Blueprint</h2>
+            <div id="weeklyReportContent"></div>
+            <div class="navigation">
+                <button class="btn" onclick="downloadWeeklyReport()">Download Blueprint</button>
+                <button class="btn btn-secondary" onclick="startNewWeek()">Plan Next Week</button>
+            </div>
+        </div>
+        </div>
+        <!-- End Main App -->
+    </div>
+
+    <script>
+        // Password Protection
+        const ACCESS_CODE = "weekly2025"; // Change this to your desired password
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (input === ACCESS_CODE) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').classList.remove('hidden');
+                // Store access in session
+                sessionStorage.setItem('weeklyAccess', 'granted');
+                initializeWeekDisplay();
+            } else {
+                errorDiv.textContent = 'Invalid access code. Please try again.';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+        
+        // Check if user already has access
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('weeklyAccess') === 'granted') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainApp').classList.remove('hidden');
+                initializeWeekDisplay();
+            }
+        });
+        
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        function initializeWeekDisplay() {
+            const today = new Date();
+            const weekEnd = new Date(today);
+            weekEnd.setDate(today.getDate() + 6);
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const todayStr = today.toLocaleDateString('en-US', options);
+            const weekEndStr = weekEnd.toLocaleDateString('en-US', options);
+            
+            document.getElementById('weekDisplay').innerHTML = `
+                <strong>Your Quantum Week:</strong> ${todayStr} → ${weekEndStr}
+            `;
+        }
+
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        function updateProgress() {
+            const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+            
+            // Update step indicators
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepDot = document.getElementById(`step${i}`);
+                if (i < currentStep) {
+                    stepDot.className = 'step-dot completed';
+                } else if (i === currentStep) {
+                    stepDot.className = 'step-dot active';
+                } else {
+                    stepDot.className = 'step-dot';
+                }
+            }
+        }
+
+        function nextStep(step) {
+            // Validate current step
+            if (currentStep === 1 && !document.getElementById('vision').value.trim()) {
+                alert('Please complete your future self vision before proceeding.');
+                return;
+            }
+            if (currentStep === 2 && !document.getElementById('energy').value.trim()) {
+                alert('Please complete your energy scan before proceeding.');
+                return;
+            }
+            if (currentStep === 3 && !document.getElementById('beliefs').value.trim()) {
+                alert('Please complete your belief archaeology before proceeding.');
+                return;
+            }
+            if (currentStep === 4 && !document.getElementById('action').value.trim()) {
+                alert('Please complete your aligned action design before proceeding.');
+                return;
+            }
+            if (currentStep === 5 && !document.getElementById('completion').value.trim()) {
+                alert('Please complete your completion planning before proceeding.');
+                return;
+            }
+            
+            if (step === 6) {
+                generateWeeklySummary();
+            }
+            
+            document.getElementById(`section${currentStep}`).classList.add('hidden');
+            document.getElementById(`section${step}`).classList.remove('hidden');
+            currentStep = step;
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function prevStep(step) {
+            document.getElementById(`section${currentStep}`).classList.add('hidden');
+            document.getElementById(`section${step}`).classList.remove('hidden');
+            currentStep = step;
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function generateWeeklySummary() {
+            const vision = document.getElementById('vision').value;
+            const energy = document.getElementById('energy').value;
+            const beliefs = document.getElementById('beliefs').value;
+            const action = document.getElementById('action').value;
+            const completion = document.getElementById('completion').value;
+            
+            const today = new Date();
+            const weekEnd = new Date(today);
+            weekEnd.setDate(today.getDate() + 6);
+            const weekStr = `${today.toDateString()} - ${weekEnd.toDateString()}`;
+            
+            const summary = `QUANTUM WEEKLY INTENTION MAPPING
+Week of: ${weekStr}
+
+FUTURE SELF WEEKLY VISION:
+${vision}
+
+CURRENT ENERGY & RESISTANCE SCAN:
+${energy}
+
+BELIEF ARCHAEOLOGY & SABOTAGE DETECTION:
+${beliefs}
+
+ALIGNED ACTION DESIGN:
+${action}
+
+COMPLETION & INTEGRATION:
+${completion}
+
+---
+
+Please analyze this weekly intention mapping using the Weekly Quantum Analysis Framework provided below.`;
+            
+            document.getElementById('weeklyResponses').textContent = summary;
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            // Try modern clipboard API first
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const button = event.target;
+                    const originalText = button.textContent;
+                    button.textContent = '✅ Copied!';
+                    button.style.background = '#48bb78';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                    }, 2000);
+                }).catch(err => {
+                    fallbackCopy(text, event.target);
+                });
+            } else {
+                fallbackCopy(text, event.target);
+            }
+        }
+        
+        function fallbackCopy(text, button) {
+            // Create a temporary textarea element
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            
+            try {
+                textArea.focus();
+                textArea.select();
+                
+                // Try the older execCommand method
+                const successful = document.execCommand('copy');
+                
+                if (successful) {
+                    const originalText = button.textContent;
+                    button.textContent = '✅ Copied!';
+                    button.style.background = '#48bb78';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                    }, 2000);
+                } else {
+                    throw new Error('Copy command failed');
+                }
+            } catch (err) {
+                // If all else fails, select the text for manual copying
+                const element = document.getElementById(text.includes('QUANTUM WEEKLY') ? 'weeklyResponses' : 'weeklyAnalysisPrompt');
+                element.style.background = '#fff3cd';
+                element.style.border = '2px solid #ffc107';
+                
+                // Select the text
+                if (window.getSelection) {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(element);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+                
+                button.textContent = 'Text Selected - Press Ctrl+C';
+                button.style.background = '#ffc107';
+                
+                setTimeout(() => {
+                    element.style.background = '';
+                    element.style.border = '';
+                    button.textContent = button.textContent.includes('Weekly') ? 'Copy Weekly Responses' : 'Copy Analysis Framework';
+                    button.style.background = '';
+                }, 5000);
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function generateWeeklyReport() {
+            const vision = document.getElementById('vision').value;
+            const energy = document.getElementById('energy').value;
+            const beliefs = document.getElementById('beliefs').value;
+            const action = document.getElementById('action').value;
+            const completion = document.getElementById('completion').value;
+            const analysis = document.getElementById('weeklyAiAnalysis').value;
+            
+            if (!analysis.trim()) {
+                alert('Please paste your AI analysis before generating the blueprint.');
+                return;
+            }
+            
+            const today = new Date();
+            const weekEnd = new Date(today);
+            weekEnd.setDate(today.getDate() + 6);
+            const weekStr = `${today.toDateString()} - ${weekEnd.toDateString()}`;
+            
+            const reportHTML = `
+                <div class="weekly-focus">
+                    <h3>Week of: ${weekStr}</h3>
+                </div>
+                
+                <h3>Future Self Weekly Vision</h3>
+                <div class="analysis-content">${vision}</div>
+                
+                <h3>Current Energy & Resistance Scan</h3>
+                <div class="analysis-content">${energy}</div>
+                
+                <h3>Belief Archaeology & Sabotage Detection</h3>
+                <div class="analysis-content">${beliefs}</div>
+                
+                <h3>Aligned Action Design</h3>
+                <div class="analysis-content">${action}</div>
+                
+                <h3>Completion & Integration</h3>
+                <div class="analysis-content">${completion}</div>
+                
+                <h3>Weekly Quantum Analysis & Blueprint</h3>
+                <div class="analysis-content">${analysis}</div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 10px; text-align: center;">
+                    <p><strong>Created:</strong> ${new Date().toLocaleDateString()}</p>
+                    <p><em>Quantum Weekly Intention Mapper - 7-Day Alignment Portal</em></p>
+                    <p><em>© Senga Cree Coaching</em></p>
+                </div>
+            `;
+            
+            document.getElementById('weeklyReportContent').innerHTML = reportHTML;
+            document.getElementById(`section${currentStep}`).classList.add('hidden');
+            document.getElementById('weeklyReport').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function downloadWeeklyReport() {
+            const reportContent = document.getElementById('weeklyReportContent').innerHTML;
+            const today = new Date();
+            const weekStr = today.toISOString().split('T')[0];
+            
+            const fullReport = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Weekly Quantum Intention Blueprint - ${weekStr}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+                        h3 { color: #2c5aa0; border-bottom: 2px solid #4facfe; padding-bottom: 10px; margin-top: 30px; }
+                        .analysis-content { background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 15px 0; }
+                        .weekly-focus { background: #fef3c7; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Weekly Quantum Intention Blueprint</h1>
+                    ${reportContent}
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([fullReport], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Weekly_Quantum_Blueprint_${weekStr}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function startNewWeek() {
+            if (confirm('Ready to plan your next quantum week? This will clear your current responses.')) {
+                // Clear all inputs
+                document.getElementById('vision').value = '';
+                document.getElementById('energy').value = '';
+                document.getElementById('beliefs').value = '';
+                document.getElementById('action').value = '';
+                document.getElementById('completion').value = '';
+                document.getElementById('weeklyAiAnalysis').value = '';
+                
+                // Reset to step 1
+                document.getElementById('weeklyReport').classList.add('hidden');
+                document.getElementById('section1').classList.remove('hidden');
+                currentStep = 1;
+                updateProgress();
+                initializeWeekDisplay();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
